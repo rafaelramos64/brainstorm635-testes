@@ -122,11 +122,6 @@
         variant="outline-warning" class="buttonPause"
         @click="pauseBrainstorm()">Pause
       </b-button>
-      <!-- <b-button
-        v-if="isLeader && concluded"
-        variant="outline-info"
-        @click="printBrainstorm()">Finish and print Brainstorm
-      </b-button>-->
     </b-row>
   </b-container>
 </template>
@@ -146,8 +141,14 @@ export default {
       listFinishWriteIdeas: 0,
       participants: 0,
       // concluded: null,
-      hourOfStartRound: ''
+      hourOfStartRound: '',
+      running: true
     }
+  },
+
+  mounted () {
+    this.getData()
+    this.getHourOfStartRound()
   },
 
   watch: {
@@ -156,14 +157,14 @@ export default {
     // },
     hourOfStartRound: function () {
       if (this.hourOfStartRound) {
-        this.timeForWriting()
+        this.createClock()
       }
+    },
+    $route (route) {
+      this.round = route.params.round
+      this.getData()
+      this.getHourOfStartRound()
     }
-  },
-
-  mounted () {
-    this.getData()
-    this.getHourOfStartRound()
   },
 
   computed: {
@@ -179,61 +180,64 @@ export default {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.get().then(doc => {
         this.hourOfStartRound = new Date(doc.data().hourOfStartRound)
-        console.log(this.hourOfStartRound)
       })
     },
 
     getData () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
 
-      const push = async (round) => {
-        this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
-      }
-
       database.onSnapshot(doc => {
-        const running = doc.data().running
+        this.running = doc.data().running
 
-        if (doc.data().concluded) {
-          this.printBrainstorm()
-        }
-
-        this.description = doc.data().description
-        this.currentRound = doc.data().currentRound
-        this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
-        this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
-        this.participants = doc.data().listGuests.length
-        if (!running) {
-          this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
-        } else if (this.round !== ('round' + doc.data().currentRound)) {
-          const round = 'round' + doc.data().currentRound
-          push(round).then(() => {
-            window.location.reload()
+        if (doc.data().concluded && (this.$route.name !== 'printBrainstorm')) {
+          this.saveIdeas().then(() => {
+            this.$router.push({ name: 'printBrainstorm', params: { id: this.brainstormId } })
           })
+        } else {
+          this.description = doc.data().description
+          this.currentRound = doc.data().currentRound
+          this.isLeader = doc.data().leader === this.$firebase.auth().currentUser.uid
+          this.listFinishWriteIdeas = doc.data().listFinishWriteIdeas.length
+          this.participants = doc.data().listGuests.length
+          if (!this.running && (this.$route.name !== 'brainstorm')) {
+            this.$router.push({ name: 'brainstorm', params: { id: this.brainstormId } })
+          } else if (this.round !== ('round' + doc.data().currentRound)) {
+            const round = 'round' + doc.data().currentRound
+            this.saveIdeas().then(() => {
+              this.$router.push({ name: 'startBrainstorm', params: { id: this.brainstormId, round: round } })
+              /* window.location.reload() */
+            })
+          }
         }
       })
     },
 
-    async createClock () {
+    createClock () {
       const currentTime = new Date()
-      let timeDifference = currentTime - this.hourOfStartRound
-      timeDifference = Number(timeDifference)
+      const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
+      let totalSeconds = 300
       let min = 0
-      let seg = 60
+      let seg = 0
 
-      if (timeDifference > 0 && (seg - (Math.trunc(timeDifference / 1000)) > 0)) {
-        seg = seg - (Math.trunc(timeDifference / 1000))
-        console.log('verdadeiro', timeDifference)
-      } else {
-        console.log('falso', timeDifference)
+      if (timeSecondsDifference > 0 && (totalSeconds - timeSecondsDifference > 0)) {
+        totalSeconds = totalSeconds - timeSecondsDifference
       }
+
+      min = Math.trunc(totalSeconds / 60)
+      seg = totalSeconds - (min * 60)
 
       const cron = setInterval(() => {
         if (seg < 0 && min > 0) {
           min--
           seg = 59
-        } else if (seg === 0 && min === 0) {
+        } else if ((seg === 0 && min === 0) || !this.running) {
           clearInterval(cron)
+          this.saveIdeas()
+          if (seg === 0 && min === 0) {
+            this.verifyFinalRound()
+            this.changeRound()
+          }
         }
 
         this.time = (min < 10 ? '0' + min : min) + ' : ' + (seg < 10 ? '0' + seg : seg)
@@ -246,20 +250,26 @@ export default {
       database.update({ running: false })
     },
 
-    async changeRound () {
-      this.verifyFinalRound()
+    changeRound () {
       if (
       /* (this.listFinishWriteIdeas > 0) && */
       /* (this.participants === this.listFinishWriteIdeas) && */
         (this.currentRound < this.participants)) {
+        this.ideas = []
+        /* this.$bvToast.toast('Changing to Round' + this.round[5], {
+          title: '',
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          autoHideDelay: 1000,
+          appendToast: true
+        }) */
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        await database.update({
+        database.update({
           currentRound: this.currentRound + 1,
           listFinishWriteIdeas: [],
           hourOfStartRound: new Date()
         })
       }
-      await this.saveIdeas()
     },
 
     finishWriteIdeas () {
@@ -279,43 +289,16 @@ export default {
           console.error(error)
         })
       await database.update({
-        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      })
-    },
-
-    timeForWriting () {
-      let time = 62000
-
-      const currentTime = new Date()
-      let timeDifference = currentTime - this.hourOfStartRound
-      timeDifference = Number(timeDifference)
-
-      if (timeDifference > 0) {
-        time = time - timeDifference
-      }
-
-      this.createClock().then(() => {
-        setTimeout(() => {
-          this.changeRound()
-          this.verifyFinalRound()
-        }, time)
+        listFinishWriteIdeas: firebase.firestore.FieldValue.arrayUnion(user)
+        /* currentDate: firebase.firestore.FieldValue.serverTimestamp() */
       })
     },
 
     verifyFinalRound () {
       if (this.currentRound === this.participants) {
         const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
-        database.set({ concluded: true }, { merge: true }).then(() => {
-          this.printBrainstorm()
-        })
-      } // else {
-      //   this.concluded = false
-      // }
-    },
-
-    printBrainstorm () {
-      this.$router.push({ name: 'printBrainstorm' })
+        database.update({ concluded: true })
+      }
     }
   }
 }
