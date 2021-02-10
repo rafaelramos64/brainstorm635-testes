@@ -280,7 +280,13 @@ export default {
 
     async saveIdeas () {
       const user = this.$firebase.auth().currentUser.uid
-      const data = { [user]: this.ideas }
+      const removeEmptyIdeas = []
+      for (const index in this.ideas) {
+        if (this.ideas[index] !== '') {
+          removeEmptyIdeas.push(this.ideas[index])
+        }
+      }
+      const data = { [user]: removeEmptyIdeas }
 
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       await database.collection('ideas').doc(this.round).set(data, { merge: true })
