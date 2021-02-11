@@ -216,7 +216,7 @@ export default {
       const currentTime = new Date()
       const timeSecondsDifference = Math.trunc((currentTime - this.hourOfStartRound) / 1000)
 
-      let totalSeconds = 300
+      let totalSeconds = 20
       let min = 0
       let seg = 0
 
