@@ -18,7 +18,7 @@
         v-for="(roundy, i) in ideasPerRound"
         :key="i"
       >
-        <b-col md="12" class="mb-1">
+        <b-col md="12" class="mb-2">
           <h5 class="round">Round {{ i + 1 }}</h5>
         </b-col>
         <b-col md="12">
@@ -30,11 +30,11 @@
               :key="index"
             >
               <div class="postit">
-                <h5 class="text-center">
+                <h5 class="text-center pt-1 pb-3">
                   <b> Idea #{{ index + 1 }} </b>
                 </h5>
                 <b-card-text>
-                  <p style="font-size: 1rem">
+                  <p style="font-size: 17.5px; text-align: justify;">
                     {{ value }}
                   </p>
                 </b-card-text>
@@ -125,16 +125,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 /* $color: rgb(255,215,7); */
 /* $color: #6495ED; */
 /* $color: #836FFF; */
-$color: #add8e6;
+/* $color: #add8e6; */
 /* $color:#ADFF2F; */
 /* $color: #DDA0DD; */
-$colorDark: darken($color, 10%) transparent;
+/* $colorDark: darken($color, 10%) transparent; */
 
-.postit {
+/* .postit {
   padding: 1.5rem;
   background: $color;
   position: relative;
@@ -164,6 +164,48 @@ $colorDark: darken($color, 10%) transparent;
   border-width: 1.5em 1.5em 0 0;
   border-style: solid;
   border-color: $colorDark;
+} */
+.postit {
+  line-height: 1;
+  text-align: center;
+  width: 98%;
+  max-width: 98%;
+  margin: 0px;
+  min-height: 250px;
+  max-height: 250px;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid #E8E8E8;
+  /* border-top: 60px solid #fdfd86; */
+  font-family: 'comfortaa';
+  font-size: 3em;
+  border-bottom-right-radius: 60px 6px;
+  display: inline-block;
+  background: #ADD8E6; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #b6dae6 81%, #b6dae6 82%, #b6dae6 82%, #e1f7ff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#b6dae6), color-stop(82%,#b6dae6), color-stop(82%,#b6dae6), color-stop(100%,#e1f7ff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%#b6dae6 82%,#e1f7ff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, hsl(195, 53%, 79%) 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* IE10+ */
+  background: linear-gradient(135deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#e1f7ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.postit:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -0px;
+  bottom: 20px;
+  width: 200px;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
+  -moz-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -webkit-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  transform: matrix(-1, -0.1, 0, 1, 0, 0);
 }
 
 .container-ideas {
@@ -174,7 +216,6 @@ $colorDark: darken($color, 10%) transparent;
 }
 
 h5,
-p,
 span {
   font-family: 'comfortaa';
 }
@@ -183,6 +224,7 @@ span {
   color: #138496;
   font-weight: 700;
   margin: 0 !important;
+  font-family: 'comfortaa';
 }
 
 .date {
