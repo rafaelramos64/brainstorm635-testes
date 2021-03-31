@@ -1,23 +1,22 @@
 <template>
-  <b-container fluid>
-    <br />
+  <b-container fluid style="height: 61.3vh">
     <b-row align-v="end">
       <b-col
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
         md="7">
-        <b-card class="text-center pr-5 pl-5 pb-5 pt-0 mt-3">
+        <b-card class="text-center pr-5 pl-5 pb-5 ">
           <b-row>
             <b-col>
-              <h4 class="page-tittle mb-5 mt-4">Brainstorm</h4>
+              <h4 class="page-tittle mb-5">Brainstorm</h4>
             </b-col>
           </b-row>
           <b-row class="text-center mt-4">
             <b-col md="6">
               <b-button
                 @click="createNewBrainstorm()"
-                class="new-brain-button mt-5"
+                class="new-brain-button mt-5 focus-button"
                 variant="outline-info">
-                New Brainstorm
+                  New Brainstorm
                 <i class="fas fa-plus"></i>
               </b-button>
             </b-col>
@@ -32,7 +31,9 @@
                       maxlength="10"
                     >
                     </b-form-input>
-                    <b-button type="submit" variant="info">
+                    <b-button
+                      class="focus-button"
+                      type="submit" variant="info">
                       Join
                     </b-button>
                   </b-col>
@@ -99,8 +100,9 @@ export default {
   },
 
   methods: {
+
+    // This function create a new brainstorm
     createNewBrainstorm () {
-      /* EventBus.$emit('updateList') */
       const id = this.codeGenerator(6)
       const currentUser = this.$firebase.auth().currentUser
       const user = {
@@ -113,6 +115,7 @@ export default {
         .collection('brainstorms')
         .doc(id.toString())
         .set({
+          roundsTime: '5:00',
           running: false,
           leader: user.uid,
           description: 'Brainstorm description',
@@ -126,6 +129,7 @@ export default {
         .catch(error => console.error(error))
     },
 
+    // This function generate a ramdom code for the brainstorm
     codeGenerator (length) {
       let result = ''
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -138,6 +142,7 @@ export default {
       return result
     },
 
+    // This function is async, it enables the user get in the brainstorm using the code
     async joinWithCode (coderoom) {
       coderoom = coderoom.trim()
       coderoom = coderoom.toUpperCase()
@@ -159,14 +164,12 @@ export default {
                 /* currentDate: firebase.firestore.FieldValue.serverTimestamp(), */
                 listGuests: firebase.firestore.FieldValue.arrayUnion(userGuest)
               })
-              console.log('Você entrou!!!')
               this.$router.push({
                 name: 'brainstorm',
                 params: { id: coderoom }
               })
             } else {
               this.fullBrainstorm()
-              console.log('Já está lotado!')
             }
           })
           .catch((error) => {
@@ -176,6 +179,7 @@ export default {
       }
     },
 
+    // This function warning to user that the brainstorm is full
     fullBrainstorm () {
       Swal.fire({
         title: 'The Brainstorm is full!',
@@ -184,10 +188,11 @@ export default {
         icon: 'error',
         confirmButtonText: 'OK',
         confirmButtonColor: '#17a2b8',
-        timer: 4000
+        timer: 2500
       })
     },
 
+    // This function warning to user that the brainstorm don't exist
     nonExistentBrainstorm () {
       Swal.fire({
         title: 'Brainstorm not existent!',
@@ -196,7 +201,7 @@ export default {
         icon: 'error',
         confirmButtonText: 'OK',
         confirmButtonColor: '#17a2b8',
-        timer: 4000
+        timer: 2500
       })
     }
   }
@@ -210,6 +215,11 @@ export default {
 
 .input-for-code {
   padding: 1.2rem 0.5rem !important;
+}
+
+.input-for-code:focus {
+  box-shadow: none !important;
+  border: 1px solid #17a2b8 !important;
 }
 
 /* Changes for Modal */
