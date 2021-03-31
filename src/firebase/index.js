@@ -5,6 +5,7 @@ import 'firebase/firestore'
 import 'firebase/database'
 import 'firebase/analytics'
 
+// set configs
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
   authDomain: process.env.VUE_APP_AUTH_DOMAIN,
