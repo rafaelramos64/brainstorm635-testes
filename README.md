@@ -1,13 +1,12 @@
 # Visão Geral
 
-A aplicação consiste em uma forma virtual e simples, de realizar a técnica de geração de ideias Brainstorming 635, como a aplicação é feita em meio digital possibilita que o método seja feito por pessoas que não estão próximas quebrando assim a barreira espaço físico, o participante inicial que criará o brainstorming gera um convite e envia aos demais participantes ao final do processo a aplicação gera um arquivo de texto disponível para download pelos participantes.
-##URL para a aplicação: https://app-brainstorm-testes.web.app/home
+A aplicação consiste em uma forma virtual e simples, de realizar a técnica de geração de ideias Brainstorming 635, como a aplicação é feita em meio digital possibilita que o método seja feito por pessoas que não estão próximas quebrando assim a barreira espaço físico, o participante inicial que criará o brainstorming gera um convite e envia aos demais participantes ao final do processo a aplicação gera um arquivo de texto disponível para download pelos participantes. ##URL para a aplicação: http://app-brainstorming.web.app/
 
 # frontend
 
 ## Project link
 ```
-https://app-brainstorm-testes.web.app/
+https://app-brainstorming.web.app/
 ```
 
 ## Project setup

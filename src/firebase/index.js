@@ -1,8 +1,7 @@
 import firebase from 'firebase/app'
-import 'firebase/analytics'
-
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/analytics'
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
@@ -14,7 +13,8 @@ const firebaseConfig = {
   measurementId: process.env.VUE_APP_MEASUREMENT_ID
 }
 
-export const firebaseApp = firebase.initializeApp(firebaseConfig)
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+firebase.analytics()
 
 export default function install (Vue) {
   Object.defineProperty(Vue.prototype, '$firebase', {

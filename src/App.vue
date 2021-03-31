@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'default',
-  components: {},
+  components: { },
   data () {
     return {
     }
@@ -15,6 +15,10 @@ export default {
 }
 </script>
 <style>
+
+#app {
+  height: 100%;
+}
 /* #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

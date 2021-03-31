@@ -15,18 +15,16 @@
       </b-col>
       <b-row
         class="mb-4 text-center"
-        v-for="(roundy, i) in ideasPerRound"
-        :key="i"
       >
         <b-col md="12" class="mb-2">
-          <h5 class="round">Round {{ i + 1 }}</h5>
+          <!-- <h5 class="round">Round {{ i + 1 }}</h5> -->
         </b-col>
         <b-col md="12">
-          <b-row v-for="(values, key) in roundy" :key="key">
+          <b-row>
             <b-col
               class="mb-4 pl-1 pr-1"
               md="4"
-              v-for="(value, index) in values"
+              v-for="(idea, index) in ideasToPrint"
               :key="index"
             >
               <div class="postit">
@@ -35,8 +33,11 @@
                 </h5>
                 <b-card-text>
                   <p style="font-size: 17.5px; text-align: justify;">
-                    {{ value }}
+                    {{ idea.description }}
                   </p>
+                  <span class="ideaTagging" v-if="idea.idContinueIdea !== ''">
+                    Continue Idea #{{ setNumberIdea(idea.idContinueIdea) + 1 }}
+                  </span>
                 </b-card-text>
                 <!-- <p
                   class="text-muted"
@@ -74,52 +75,67 @@ export default {
       loading: true,
       brainstormId: this.$route.params.id,
       brainstormDate: '',
-      rounds: [],
+      numberRounds: [],
       ideasPerRound: [],
-      description: ''
+      description: '',
+      ideasToPrint: []
     }
   },
 
   mounted () {
-    this.getData()
+    this.printIdeas()
   },
 
   methods: {
-    getData () {
+    printIdeas () {
       try {
-        const db = this.$firebase.firestore()
-        db.collection('brainstorms')
+        // Geting every brainstorm datas by id
+        const ideas = this.$firebase.firestore()
+          .collection('brainstorms')
           .doc(this.brainstormId)
-          .get()
-          .then(doc => {
-            this.rounds = doc.data().listGuests
-            this.description = doc.data().description
-            this.brainstormDate = doc.data().brainstormDate.toDate()
-            /* ? doc.data().currentDate.timestamp
-            : '' */
 
-            for (let i = 0; i < this.rounds.length; i++) {
-              const index = 'round' + (i + 1)
-              try {
-                const rows = this.$firebase.firestore()
-                rows
-                  .collection('brainstorms')
-                  .doc(this.brainstormId)
-                  .collection('ideas')
-                  .doc(index)
-                  .get()
-                  .then(doc => {
-                    this.ideasPerRound.push(doc.data())
-                  })
-              } catch (error) {
-                console.error(error)
-              }
+        // Geting datas to show brainstorm -
+        ideas.onSnapshot(doc => {
+          this.numberRounds = doc.data().listGuests
+          this.description = doc.data().description
+          this.brainstormDate = doc.data().brainstormDate.toDate()
+
+          for (let index = 0; index < this.numberRounds.length; index++) {
+            const indexSheet = 'sheet' + (index + 1)
+            try {
+              ideas.collection('sheets')
+                .doc(indexSheet)
+                .get()
+                .then(doc => {
+                  /* console.log(`%c${indexSheet}`, 'color: red')
+                  console.log(`%c${indexRound}`, 'color: green') */
+
+                  for (let round = 0; round < this.numberRounds.length; round++) {
+                    const indexRound = 'round' + (round + 1)
+                    let count = 1
+                    for (const sheet in doc.data()[indexRound]) {
+                      if (sheet !== 'owner') {
+                        this.ideasToPrint.push(doc.data()[indexRound][`idea${count}`])
+                        count++
+                      }
+                    }
+                  }
+                })
+            } catch (error) {
+              console.error(error)
             }
-            this.loading = false
-          })
+          }
+          // console.log(this.roundsInSheets)
+          this.loading = false
+        })
       } catch (error) {
         console.error(error)
       }
+    },
+
+    setNumberIdea: function (id) {
+      const indexIdeaContinued = this.ideasToPrint.findIndex(idea => idea.id === id)
+      return indexIdeaContinued
     }
   }
 }
@@ -165,6 +181,7 @@ export default {
   border-style: solid;
   border-color: $colorDark;
 } */
+
 .postit {
   line-height: 1;
   text-align: center;
@@ -206,6 +223,14 @@ export default {
   -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
   transform: matrix(-1, -0.1, 0, 1, 0, 0);
+}
+
+.ideaTagging{
+  position: absolute;
+  bottom: 5% !important;
+  left: 25%;
+  right: auto;
+  font-size: 1.1rem;
 }
 
 .container-ideas {
