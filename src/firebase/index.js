@@ -1,8 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/storage'
 import 'firebase/firestore'
-import 'firebase/database'
 import 'firebase/analytics'
 
 // set configs
