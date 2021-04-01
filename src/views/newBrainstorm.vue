@@ -2,16 +2,24 @@
   <b-container fluid style="height: 61.3vh">
     <b-row align-v="end">
       <b-col
+<<<<<<< HEAD
+        class="new-brain-col align-items-center justify-content-center ml-auto mr-auto"
+        md="7"
+        lg="8"
+        sm="12">
+        <b-card class="text-center pr-5 pl-5 pb-5 new-brain-card">
+=======
         class="brain-card align-items-center justify-content-center ml-auto mr-auto"
         md="7">
         <b-card class="text-center pr-5 pl-5 pb-5 ">
+>>>>>>> 44e62c7f0a09363e555ae2e8d6aa82bbf7f49281
           <b-row>
             <b-col>
               <h4 class="page-tittle mb-5">Brainstorm</h4>
             </b-col>
           </b-row>
           <b-row class="text-center mt-4">
-            <b-col md="6">
+            <b-col md="6" class="cols-new-brain">
               <b-button
                 @click="createNewBrainstorm()"
                 class="new-brain-button mt-5 focus-button"
@@ -20,7 +28,7 @@
                 <i class="fas fa-plus"></i>
               </b-button>
             </b-col>
-            <b-col md="6">
+            <b-col md="6" class="cols-new-brain">
               <b-form @submit.prevent="joinWithCode(coderoom)">
                 <b-row class="mt-5">
                   <b-col md="12" class="d-flex">
@@ -265,4 +273,30 @@ export default {
   border-color: #a94442 !important;
   box-shadow: 0 0 0 0.2rem rgba(225,83,97,.5) !important;
 } */
+
+/* Media queries for responsive new brainstorm card */
+@media only screen and (max-width: 1056px) {
+  /* .new-brain-card {
+  } */
+  .new-brain-col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 931px) {
+  .new-brain-card {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+  .new-brain-col {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 490px) {
+  .cols-new-brain, .new-brain-button {
+    width: 100% !important;
+  }
+}
 </style>
