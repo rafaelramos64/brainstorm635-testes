@@ -1,12 +1,21 @@
 <template>
   <b-container fluid class="footer">
+<<<<<<< HEAD
     <b-row class="text-center justify-content-md-center" align-v="end" style="padding-top: 10px">
       <b-col class="cols-footer" md="6" lg="6" sm="6" align-self="center">
+=======
+    <b-row class="text-center justify-content-md-center" align-v="end" style="padding-top: 10px" >
+      <b-col md="6" xs="5" sm="6" align-self="center">
+>>>>>>> 44e62c7f0a09363e555ae2e8d6aa82bbf7f49281
         <span class="span">
           &copy; CopyRight, Brainstorm635 2020
         </span>
       </b-col>
+<<<<<<< HEAD
       <b-col class="cols-footer sidebar-footer" md="6" lg="6" sm="6" align-self="center" style="padding-top: 15px">
+=======
+      <b-col md="6" xs="5" sm="6" align-self="center" class="sidebar-footer"  style="padding-top: 15px">
+>>>>>>> 44e62c7f0a09363e555ae2e8d6aa82bbf7f49281
         <span class="span">
           All Rights Reserved
         </span>
@@ -27,8 +36,11 @@
   min-height: 75px !important;
   max-height: 80px !important;
   border-top: rgb(0, 0, 0, 0.125 ) 0.2px solid !important;
+<<<<<<< HEAD
   margin-left: none !important;
   margin-right: none !important;
+=======
+>>>>>>> 44e62c7f0a09363e555ae2e8d6aa82bbf7f49281
 }
 
 /* .footer {
@@ -50,9 +62,12 @@
 @media only screen and (max-width: 576px) {
   .span {
     font-size: 13px !important;
+<<<<<<< HEAD
   }
   .cols-footer {
     width: 50% !important;
+=======
+>>>>>>> 44e62c7f0a09363e555ae2e8d6aa82bbf7f49281
   }
 }
 </style>

@@ -2,11 +2,17 @@
   <b-container fluid style="height: 61.3vh">
     <b-row align-v="end">
       <b-col
+<<<<<<< HEAD
         class="new-brain-col align-items-center justify-content-center ml-auto mr-auto"
         md="7"
         lg="8"
         sm="12">
         <b-card class="text-center pr-5 pl-5 pb-5 new-brain-card">
+=======
+        class="brain-card align-items-center justify-content-center ml-auto mr-auto"
+        md="7">
+        <b-card class="text-center pr-5 pl-5 pb-5 ">
+>>>>>>> 44e62c7f0a09363e555ae2e8d6aa82bbf7f49281
           <b-row>
             <b-col>
               <h4 class="page-tittle mb-5">Brainstorm</h4>
