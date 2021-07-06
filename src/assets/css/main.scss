@@ -1,0 +1,269 @@
+
+/* $danger: #ce242a;
+$danger2: #a94442;
+$back: #f2dede;
+$success: #18d26e;
+// $white: #fff;
+// $emperor: #535353;
+
+// $lavendar-magenta: #EC51DE;
+// $shocking-pink: #EB0EC7;
+// $governor-bay: #3023AE;
+// $persian-blue: #3022AD;
+// $curious-blue: #1897E1;
+// $dodger-blue: #53A0FD;
+// $red-violet: #CC19BF;
+// $mariner: #405CD2;
+// $seance: #7623A2; */
+
+html {
+  height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ body {
+  /* background-color:#f0f2f5 */
+  /* background-color: #f7f7f7; */
+
+  /* background-color: #fAfAfA  !important; */
+  background-color: #fff;
+  font-size: 14px !important;
+  font-family: Arial, Helvetica, sans-serif;
+  /* height: 100vh !important; */
+}
+
+/* Shadow para todos os cards */
+.card {
+  /* box-shadow: rgb(197 197 198) 6px 6px 12px, rgb(249 249 249) -12px -12px 24px -2px; */
+  /* box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%); */
+  /* box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 6px 0px; */
+  /* box-shadow: 0px 5px 10px 0px rgba(153, 153, 153, 0.3) !important; */
+  border-radius: 15px !important;
+  /* border: 0px #dee2e6 solid !important; */
+  border: none !important;
+  font-family: Comfortaa !important;
+}
+
+.page-tittle::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+/* The next 2 selectors are for underlined for h3 or title page */
+.page-tittle {
+  font-family: Comfortaa !important;
+  color: #111;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.page-tittle::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #17a2b8;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+.btn {
+  padding: 0.4rem 0.9rem !important;
+  font-size: 17px !important;
+  font-family: Comfortaa !important;
+}
+
+/* Removing box shadow of buttons on click*/
+.btn:focus {
+  box-shadow: none !important;
+}
+
+/* Shadow for standard buttons */
+.btn:hover {
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
+  0 4px 8px 3px rgba(60,64,67,0.149) !important;
+}
+
+/* The next 4 selectors are changes to success buttons */
+/* .btn-outline-success, .btn-primary {
+  background-color: transparent !important;
+  color: #18d26e !important;
+  border-color: #18d26e !important;
+} */
+
+/* btn-outline-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .show > .btn-outline-success.dropdown-toggle {
+  background-color: #18d26e !important;
+  color: #fff !important;
+  border-color: #18d26e !important; 
+} */
+
+/* .btn-outline-success:hover, .btn-primary:hover {
+  color: #fff !important;
+  background-color: #18d26e !important;
+  border-color: #18d26e !important;
+} */
+
+/* .btn-outline-success:focus, .btn-outline-success.focus, .btn-primary:focus {
+  background-color: #28a745 !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px !important;
+  color: #fff !important;
+ */
+
+/* The next 4 selectors are changes for primary button */
+/* .btn-outline-primary {
+  color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+} */
+
+/* .btn-outline-primary:hover {
+  color: #fff !important;
+  border-color: #17a2b8 !important;
+  background-color: #17a2b8 !important;
+} */
+
+/* .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  color: #fff !important;
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+} */
+
+
+
+/* Asterisk for required inputs */
+.required {
+  position: relative;
+  display: inline-block !important;
+}
+.required::after {
+  font-size: 1.1rem;
+  content: "*";
+  font-weight: bold;/* 
+  // position: absolute; */
+  display: inline-block;
+  color: #ce242a;
+ /*  // top: 0;
+  // right: -10px */;
+  margin-left: 2px;
+}
+
+/* Warnigs for incorrect inputs */
+.warning-input-forms {
+  color: #ce242a;
+  margin-bottom: -5px;
+  font-size: 14px;
+}
+
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),
+  0 4px 8px 3px rgba(60,64,67,0.149) !important;
+}
+
+
+/* Style for description icons of printBrainstorm and startBrainstorm screen */
+.icone {
+  /* background: #17a2b8 !important;
+  opacity: 0.95; */
+  height: 43.98px !important;
+  width: 38.38px !important;
+  padding: 5.25px 7.5px;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+  color: #17a2b8 !important;
+}
+
+.icone-padd {
+  padding-right: 3.5px !important;
+}
+
+/* Media queries for responsive card body */
+@media only screen and (max-width: 990px) {
+  .card-body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* Css for cards and textareas of the start brainstorm screen */
+.entradaTexto::-webkit-scrollbar, .postit::-webkit-scrollbar {
+  width: 4px;
+}
+
+.entradaTexto::-webkit-scrollbar-track, .postit::-webkit-scrollbar-track {
+  background: #cecece;
+  border-radius: 3px;
+}
+
+.entradaTexto::-webkit-scrollbar-thumb, .postit::-webkit-scrollbar-thumb {
+  background: #15b4cc;
+  border-radius: 3px;
+}
+
+.entradaTexto::-webkit-scrollbar-thumb:hover, .postit::-webkit-scrollbar-thumb:hover {
+  background: #17a2b8;
+}
+
+/* Css for Postits */
+/* $color: rgb(255,215,7); */
+/* $color: #6495ED; */
+/* $color: #836FFF; */
+/* $color: #add8e6; */
+/* $color:#ADFF2F; */
+/* $color: #DDA0DD; */
+/* $colorDark: darken($color, 10%) transparent; */
+
+.postit {
+  overflow: auto;
+  line-height: 1;
+  text-align: center;
+  width: 98%;
+  max-width: 98%;
+  margin: 0px;
+  min-height: 250px;
+  max-height: 250px;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid #E8E8E8;
+  /* border-top: 60px solid #fdfd86; */
+  font-family: 'comfortaa';
+  font-size: 3em;
+  border-bottom-right-radius: 60px 6px;
+  display: inline-block;
+  background: #ADD8E6; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #b6dae6 81%, #b6dae6 82%, #b6dae6 82%, #e1f7ff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#b6dae6), color-stop(82%,#b6dae6), color-stop(82%,#b6dae6), color-stop(100%,#e1f7ff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%#b6dae6 82%,#e1f7ff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, hsl(195, 53%, 79%) 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* IE10+ */
+  background: linear-gradient(135deg, #b6dae6 81%,#b6dae6 82%,#b6dae6 82%,#e1f7ff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#e1f7ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.postit:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -0px;
+  bottom: 20px;
+  width: 200px;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
+  -moz-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -webkit-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  transform: matrix(-1, -0.1, 0, 1, 0, 0);
+}

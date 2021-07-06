@@ -23,13 +23,6 @@
       is-nav
     >
       <b-navbar-nav class="ml-auto">
-        <!-- <b-spinner
-          v-if="load"
-          style="width: 1.5rem; height: 1.5rem;"
-          type="grow"
-          variant="info"
-          label="Spinning">
-        </b-spinner> -->
         <div
           v-if="verifyLocalStorage"
           class="d-flex mr-3"
@@ -51,7 +44,7 @@
             <b-dropdown-item @click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </div>
-        <b-nav-item-dropdown
+         <!-- <b-nav-item-dropdown
           text="Lang"
           right
           >
@@ -65,7 +58,6 @@
             >
             </b-img>
           </b-dropdown-item>
-        <!--
           <b-dropdown-item href="#">PT
             <b-img
               class="ml-1"
@@ -86,8 +78,7 @@
             >
             </b-img>
           </b-dropdown-item>
-         -->
-         </b-nav-item-dropdown>
+         </b-nav-item-dropdown>-->
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -151,7 +142,7 @@ export default {
       if (this.$route.name === 'brainstorm' || this.$route.name === 'startBrainstorm' || this.$route.name === 'printBrainstorm') {
         Swal.fire({
           title: 'Are you sure?',
-          text: 'You are trying to leave without finishing or saving data!',
+          text: 'You are trying to get out without finishing or saving data!',
           icon: 'warning',
           focusConfirm: false,
           showCloseButton: true,
