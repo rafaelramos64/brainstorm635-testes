@@ -7,7 +7,7 @@ A aplicação consiste em uma forma virtual e simples, de realizar a técnica de
 
 ## Project link
 ```
-https://app-brainstorming.web.app/
+https://app-brainstorm-testes.web.app/
 ```
 
 ## Project setup
