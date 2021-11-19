@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <load v-if="loading"/>
+  <div @beforeunload="
+      return ''
+    ">
+    <Loader v-if="loading"/>
     <b-container v-else align-v="center" style="margin-bottom: 8%">
       <b-row class="align-items-center justify-content-center ml-auto mr-auto">
         <b-col class="pr-0 pl-0">
@@ -48,7 +50,7 @@
           v-for="(idea, ind) in round[`round${index + 1}`]" :key="ind"
           class="mb-4 pl-1 pr-1"
           md="4">
-          <div class="postit">
+          <div class="postit" :style="returnColorPostIt(index + 1)">
             <h5 class="text-center pt-1 pb-3">
               <b>idea #{{ setNumberIdea(idea[`idea${ind + 1}`].id) + 1 }}</b>
             </h5>
@@ -79,7 +81,10 @@
                   class="entradaTexto">
                 </b-form-textarea>
               </b-form-group>
-              <div class="cor"></div>
+              <div class="cor"
+                v-if="listGuests.length > 0"
+                :style="returnColor">
+              </div>
               <label :for="`continueIdea${index + 1}`" class="d-inline mr-2">Continue</label>
               <select :name="`continueIdea${index + 1}`" :id="`continueIdea${index + 1}`" @change="setContinueIdea(index + 1)">
                 <option value="---">---</option>
@@ -117,13 +122,13 @@
 
 <script>
 import Swal from 'sweetalert2'
-import load from '../components/loader'
+import Loader from '../components/loader'
 
 const eventRoundChanged = new Event('eventRoundChanged')
 
 export default {
   name: 'StartBrainstorm',
-  components: { load },
+  components: { Loader },
   data () {
     return {
       brainstormId: this.$route.params.id,
@@ -161,6 +166,15 @@ export default {
       title: '',
       text: '',
       confirmButtonText: ''
+    }
+  },
+
+  created () {
+    window.onbeforeunload = function () {
+      if (!localStorage.getItem('sair')) {
+        localStorage.setItem('sair', 1)
+        return false
+      }
     }
   },
 
@@ -202,10 +216,32 @@ export default {
       let text = this.round
       text = 'Round: ' + text[5]
       return text
+    },
+
+    returnColor () {
+      return `background: ${this
+        .$store
+        .getters
+        .getColor(this.$firebase.auth().currentUser.uid, this.listGuests)
+      }`
     }
   },
 
   methods: {
+    returnColorPostIt (roundIdea) {
+      return `
+        background: ${this
+          .$store
+          .getters
+          .getColorPostit(
+            this.indexSheet,
+            roundIdea,
+            this.listGuests
+          )
+        }
+      `
+    },
+
     getHourOfStartRound () {
       const database = this.$firebase.firestore().collection('brainstorms').doc(this.brainstormId)
       database.get().then(doc => {
@@ -425,7 +461,7 @@ export default {
         confirmButtonText: 'Confirm pause',
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -458,7 +494,7 @@ export default {
         confirmButtonText: this.confirmButtonText,
         denyButtonText: 'Cancel',
         showCancelButton: true,
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         cancelButtonColor: '#dc3545'
       }).then((result) => {
         if (result.isConfirmed && this.isLeader) {
@@ -582,11 +618,10 @@ export default {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background:#17a2b8;
 }
 
 .cartao {
-  border: solid 1px #17a2b8 !important;
+  border: solid 1px #3BB5E0 !important;
 }
 
 .corpoInfo {
@@ -605,7 +640,7 @@ export default {
 
 .continueIdea:hover {
   background-color: #fff !important;
-  color: #138496;
+  color: #3BB5E0;
   font-weight: 300;
 }
 
@@ -638,7 +673,13 @@ export default {
 }
 
 h5,
-span {
+span,
+.idea-label {
   font-family: 'comfortaa';
+}
+
+.idea-label {
+  font-weight: 600;
+  font-size: 20px;
 }
 </style>

@@ -19,11 +19,11 @@
                   <b-form-group
                     class="text-left"
                     id="input-group-1"
-                    label="Theme Description"
+                    label="Theme/Description"
                     label-for="input-1"
                     label-class="required"
                   >
-                    <b-input-group>
+                    <b-input-group class="border-on-focu">
                       <b-input-group-prepend
                         class="input-with-prepend">
                         <span class="input-group-text color-icon"
@@ -36,8 +36,7 @@
                         type="text"
                         :disabled="!isLeader"
                         @blur="saveDescription"
-                        class="input-with-prepend"
-                        autofocus
+                        class="input-with-prepend border-on-focus"
                         id="input-1"
                         v-model="description"
                         placeholder="Describe the brainstorm"
@@ -56,7 +55,7 @@
                       @hidden="saveRoundsTime()"
                       v-b-tooltip.hover.topright.v-info
                       title="Edit time"
-                      class="input-group-text"
+                      class="input-group-text border-on-focus"
                       id="rounds-time"
                       :disabled="!isLeader"
                       v-model="roundsTime"
@@ -82,7 +81,7 @@
                       >
                       </b-form-input>
                       <b-input-group-append
-                        class="input-with-prepend">
+                        class="">
                         <b-button
                           v-b-tooltip.hover.v-info
                           title="Copy Code"
@@ -155,22 +154,19 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-spinner
-                    variant="info"
-                    label="Spinning"
-                    style="width: 1.5rem; height: 1.5rem;"
-                    type="grow"
-                  ></b-spinner>
-                  <span
-                    v-if="currentRound === 0"
-                    class="text-spinner text-flashes"
-                    >Waiting for members to start...
-                  </span>
-                  <span
-                    v-else
-                    class="text-spinner text-flashes"
-                    >Waiting for continue...
-                  </span>
+                  <div class="load-wait-members">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    <span
+                      v-if="currentRound === 0"
+                      class="text-spinner text-flashes"
+                      >Waiting for members to start...
+                    </span>
+                    <span
+                      v-else
+                      class="text-spinner text-flashes"
+                      >Waiting for continue...
+                    </span>
+                  </div>
                   <br /><br />
                   <span
                     v-if="isLeader"
@@ -330,7 +326,7 @@ export default {
         text: 'You cant alread sent it to your friends!',
         icon: 'success',
         confirmButtonText: 'OK',
-        confirmButtonColor: '#17a2b8',
+        confirmButtonColor: '#3BB5E0',
         timer: 1200
       })
     },
@@ -366,14 +362,15 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss" >
+$default-color: #3BB5E0;
 
 /* Style for inputs from brainstorm scream */
 .copy-button {
   border: none !important;
   padding: 0 !important;
   background-color: #fff !important;
-  color: #17a2b8 !important;
+  color: $default-color !important;
 }
 
 .copy-button:hover {
@@ -387,15 +384,32 @@ export default {
   box-shadow: none !important;
 }
 
-.input-with-prepend {
-  border-left: none;
-  /* background: #e9ecef !important; */
+.border-on-focus:focus {
+  border: .5px solid $default-color !important;
 }
 
-.input-with-prepend:focus, .input-code:focus {
-  /* background-color: #e9ecef; */
+.border-on-focus:hover {
+  border: .5px solid $default-color !important;
   box-shadow: none !important;
-  border-color: #ced4da !important;
+  border-radius: 0.25rem;
+}
+
+.input:-internal-autofill-selected {
+  appearance: none !important;
+  background-color: #fff !important;
+}
+
+.input-with-prepend {
+  border-left: none;
+}
+
+.input-with-prepend:focus {
+  box-shadow: none !important;
+}
+
+.input-code:focus {
+  box-shadow: none !important;
+  border-color: none !important;
 }
 
 .input-code, .form-control:disabled {
@@ -405,14 +419,13 @@ export default {
 /* Efects for spinner and text spinner */
 .text-spinner {
   margin-left: 7px;
-  color: #17a2b8;
-   font-family: comfortaa;
+  font-family: 'comfortaa' !important;
   font-size: 16px;
 }
 
 @keyframes blink {
   0% {
-    color: #17a2b8;
+    color: $default-color;
     font-size: 16.5px;
   }
   100% {
@@ -421,7 +434,7 @@ export default {
 }
 @-webkit-keyframes blink {
   0% {
-    color: #17a2b8;
+    color: $default-color;
     font-size: 16.5px;
   }
   100% {
@@ -437,14 +450,13 @@ export default {
 /* Changing the background color of input appends */
 
 .color-icon {
-  color: #17a2b8 !important;
+  color: $default-color !important;
   background-color: #fff;
 }
 
 .photo-guests, .active-members {
   background-color: #fff !important;
-  color: #17a2b8 !important; /* #1384968 */
-  /*  opacity: 1.95 !important; */
+  color: $default-color !important;
   border: none !important;
 }
 
@@ -458,11 +470,12 @@ export default {
 
 .loading {
   font-size: 15.5px;
+  font-family: 'comfortaa' !important;
 }
 
 /* Change the color of watch in rounds time input */
 .btn .b-icon.bi, .nav-link .b-icon.bi, .dropdown-toggle .b-icon.bi, .dropdown-item .b-icon.bi, .input-group-text .b-icon.bi {
-  color: #17a2b8 !important;
+  color: $default-color !important;
 }
 
 .input-group-text {

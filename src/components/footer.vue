@@ -3,7 +3,10 @@
     <b-row class="text-center justify-content-md-center" align-v="end" style="padding-top: 10px">
       <b-col class="cols-footer" md="6" lg="6" sm="6" align-self="center">
         <span class="span">
-          &copy; CopyRight, Brainstorm635 2020
+          &copy; CopyLeft,
+          <b-img class="logo-footer" height="45"
+            :src="require('../../public/img/logo/brainstorm635.com-white.jpg')">
+          </b-img>2020
         </span>
       </b-col>
       <b-col class="cols-footer sidebar-footer" md="6" lg="6" sm="6" align-self="center" style="padding-top: 15px">
@@ -15,10 +18,8 @@
   </b-container>
 </template>
 
-<style lang="css">
+<style lang="css" scoped>
 .span {
-  font-family: comfortaa !important;
-  color: #2c3e50 !important;
   font-size: 16px !important;
 }
 
@@ -32,9 +33,8 @@
 }
 
 .sidebar-footer {
-  /* position: absolute; */
   height: 55px;
-  border-left: 4px solid #17a2b8;
+  border-left: 4px solid #3BB5E0;
 }
 
 /* Media queries for responsive footer bar */
@@ -44,6 +44,10 @@
   }
   .cols-footer {
     width: 50% !important;
+  }
+  .logo-footer {
+    height: 3rem !important;
+    width: 12rem !important;
   }
 }
 </style>
